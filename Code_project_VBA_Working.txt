@@ -1,0 +1,71 @@
+''// How to make automation in Excel Graph,i.e Stacked Chart,Column Chart,Percentage Chart
+''//Only Insert the Raw Data in Sheet and press the Button, "Reset " and "Referesh All Button"
+''// Within a momenty your dynamically graph is ready with the help of excel vba macro coding and graph.
+
+
+
+Sub RefreshAllPivot()
+    Call deleteZero
+    ActiveWorkbook.RefreshAll
+     
+End Sub
+
+
+Sub deleteZero()
+For i = 1 To 71
+
+    'If Range("BH" & i + 8).Value = 0 Then
+    If Range("BC" & i + 8).Value = 0 Or Range("BC" & i + 8).Value = "" Then
+       ' Range("BC" & i + 8 & ":" & "BH" & i + 8).ClearContents
+         Range("BC" & i + 8 & ":" & "BH79").ClearContents
+         Exit For
+    End If
+Next
+End Sub
+
+Sub ClearContentsData()
+    
+    Selection.ClearContents
+    
+End Sub
+
+Sub PasteFormula()
+
+    Range("BC1:BH1").Select
+    Selection.Copy
+    Range("BC9:BC79").Select
+    Selection.PasteSpecial Paste:=xlPasteFormulas, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    Range("BB1").Select
+    Application.CutCopyMode = False
+
+End Sub
+
+
+
+
+''--------------
+Sub Macro2()
+'
+' Macro2 Macro
+'
+
+'
+    Range("BC8:BG8").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    ActiveSheet.Shapes.AddChart.Select
+    ActiveChart.SetSourceData Source:=Range("DashBoard!$BC$8:$BG$12")
+    ActiveChart.ChartType = xlColumnStacked
+    Range("AX7").Select
+    ActiveSheet.ChartObjects("Chart 14").Activate
+    ActiveSheet.ChartObjects("Chart 14").Activate
+    ActiveChart.Axes(xlValue).MajorGridlines.Select
+    Selection.Delete
+    ActiveChart.ChartStyle = 26
+    ActiveChart.ClearToMatchStyle
+    Range("AZ7").Select
+End Sub
+
+
+
+''--------------
